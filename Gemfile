@@ -54,6 +54,8 @@ gem 'dotenv-rails', groups: %i[development test]
 
 gem 'rubocop', require: false
 
+gem 'rubocop-rails', require: false
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 

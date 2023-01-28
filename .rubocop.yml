@@ -1,0 +1,4 @@
+GlobalVars:
+  AllowedVariables:
+    - $client
+    - $tokenizer

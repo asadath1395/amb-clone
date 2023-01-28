@@ -27,6 +27,8 @@ end.parse!
 
 filename = options[:pdf_name]
 
+raise OptionParser::MissingArgument if filename.nil?
+
 $tokenizer = Tokenizers.from_pretrained('gpt2')
 
 # Count the number of tokens in a string

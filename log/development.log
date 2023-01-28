@@ -1,0 +1,9 @@
+  [1m[35m (567.6ms)[0m  [1m[35mCREATE DATABASE "amb_clone_development" ENCODING = 'unicode'[0m
+  [1m[35m (438.8ms)[0m  [1m[35mCREATE DATABASE "amb_clone_test" ENCODING = 'unicode'[0m
+Started GET "/" for 127.0.0.1 at 2023-01-28 12:41:26 +0530
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /Users/anwarsadath/.rvm/gems/ruby-3.2.0/gems/railties-7.0.4.2/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /Users/anwarsadath/.rvm/gems/ruby-3.2.0/gems/railties-7.0.4.2/lib/rails/templates/rails/welcome/index.html.erb (Duration: 2.7ms | Allocations: 605)
+Completed 200 OK in 19ms (Views: 7.7ms | ActiveRecord: 0.0ms | Allocations: 5029)
+
+

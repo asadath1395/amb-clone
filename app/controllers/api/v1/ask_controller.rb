@@ -1,3 +1,8 @@
+require 'dotenv/load'
+require 'resemble'
+
+Resemble.api_key = ENV["RESEMBLE_API_KEY"]
+
 class Api::V1::AskController < ApplicationController
   skip_forgery_protection
 
@@ -27,7 +32,24 @@ class Api::V1::AskController < ApplicationController
       }
     end
 
-    question = Question.create(question: question_asked, answer: question_asked, audio_src_url: "")
+    project_uuid = 'adb8d364'
+    voice_uuid = 't6551qa8'
+
+    response = Resemble::V2::Clip.create_sync(
+      project_uuid,
+      voice_uuid,
+      question_asked,
+      title: nil,
+      sample_rate: nil,
+      output_format: nil,
+      precision: nil,
+      include_timestamps: nil,
+      is_public: nil,
+      is_archived: nil,
+      raw: nil
+    )
+
+    question = Question.create(question: question_asked, answer: question_asked, audio_src_url: response["item"])
     question.save!()
 
     render :json => {

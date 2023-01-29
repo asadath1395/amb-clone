@@ -183,6 +183,7 @@ GEM
     rake (13.0.6)
     redis (4.8.0)
     regexp_parser (2.6.2)
+    resemble (1.2.0)
     rexml (3.2.5)
     rover-df (0.3.4)
       numo-narray (>= 0.9.1.9)
@@ -263,6 +264,7 @@ DEPENDENCIES
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.1)
   redis (~> 4.0)
+  resemble
   rover-df
   rubocop
   rubocop-rails

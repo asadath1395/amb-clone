@@ -6,28 +6,26 @@ require 'matrix'
 
 Resemble.api_key = ENV["RESEMBLE_API_KEY"]
 
-$client = OpenAI::Client.new(access_token: ENV['OPENAI_API_KEY'])
-
-COMPLETIONS_MODEL = "text-davinci-003"
-
-MODEL_NAME = "curie"
-
-DOC_EMBEDDINGS_MODEL = "text-search-#{MODEL_NAME}-doc-001"
-QUERY_EMBEDDINGS_MODEL = "text-search-#{MODEL_NAME}-query-001"
-
-$MAX_SECTION_LEN = 500
-$SEPARATOR = "\n* "
-$separator_len = 3
-
-COMPLETIONS_API_PARAMS = {
-    # We use temperature of 0.0 because it gives the most predictable, factual answer.
-    "temperature": 0.0,
-    "max_tokens": 150,
-    "model": COMPLETIONS_MODEL,
-}
-
 class Api::V1::AskController < ApplicationController
   skip_forgery_protection
+
+  COMPLETIONS_MODEL = "text-davinci-003"
+
+  MODEL_NAME = "curie"
+
+  DOC_EMBEDDINGS_MODEL = "text-search-#{MODEL_NAME}-doc-001"
+  QUERY_EMBEDDINGS_MODEL = "text-search-#{MODEL_NAME}-query-001"
+
+  MAX_SECTION_LEN = 500
+  SEPARATOR = "\n* "
+  SEPARATOR_LEN = 3
+
+  COMPLETIONS_API_PARAMS = {
+      # We use temperature of 0.0 because it gives the most predictable, factual answer.
+      "temperature": 0.0,
+      "max_tokens": 150,
+      "model": COMPLETIONS_MODEL,
+  }
 
   def create
     question_asked = params[:question] || ""
@@ -87,8 +85,12 @@ class Api::V1::AskController < ApplicationController
   end
 
   private
+  def client
+    @client ||= OpenAI::Client.new(access_token: ENV['OPENAI_API_KEY']) 
+  end
+
   def get_embedding(text, model)
-    result = $client.embeddings(
+    result = client.embeddings(
       parameters: {
         model: model,
         input: text
@@ -157,15 +159,15 @@ class Api::V1::AskController < ApplicationController
         section_index = section[:title]
         document_section = df[df['title'] == section_index]
 
-        chosen_sections_len += document_section['tokens'][0] + $separator_len
-        if chosen_sections_len > $MAX_SECTION_LEN
-          space_left = $MAX_SECTION_LEN - chosen_sections_len - $SEPARATOR.length
-          chosen_sections.push($SEPARATOR + document_section['content'][0][:space_left])
+        chosen_sections_len += document_section['tokens'][0] + SEPARATOR_LEN
+        if chosen_sections_len > MAX_SECTION_LEN
+          space_left = MAX_SECTION_LEN - chosen_sections_len - SEPARATOR.length
+          chosen_sections.push(SEPARATOR + document_section['content'][0][:space_left])
           chosen_sections_indexes.push(str(section_index))
           break
         end
 
-        chosen_sections.push($SEPARATOR + document_section['content'][0])
+        chosen_sections.push(SEPARATOR + document_section['content'][0])
         chosen_sections_indexes.push(section_index.to_s)
     end
 
@@ -197,7 +199,7 @@ class Api::V1::AskController < ApplicationController
 
     print("===\n", prompt)
 
-    response = $client.completions(
+    response = client.completions(
       parameters: {
           prompt: prompt,
           **COMPLETIONS_API_PARAMS

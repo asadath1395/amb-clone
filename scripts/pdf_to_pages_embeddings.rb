@@ -40,8 +40,8 @@ end
 def extract_pages(page_text, index)
   return [] if page_text.empty?
 
-  print("page text: #{content}")
   content = page_text.split.join(' ')
+  print("page text: #{content}")
   Rover::DataFrame.new({
                          title: "Page #{index}",
                          content: content,
@@ -87,7 +87,7 @@ end
 
 doc_embeddings = compute_doc_embeddings(df)
 
-CSV.open("#{filename}.new.embeddings.csv", 'w') do |csv|
+CSV.open("#{filename}.embeddings.csv", 'w') do |csv|
   csv << ['title'] + (0...4096).to_a
   doc_embeddings.each do |i, embedding|
     csv << ["Page #{i + 1}"] + embedding

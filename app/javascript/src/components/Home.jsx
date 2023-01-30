@@ -86,11 +86,6 @@ const Home = () => {
           >
             Ask {answerToShow ? "another" : ""} question
           </button>
-          {!answerToShow && (
-            <button disabled={loading} className="feeling-luck">
-              I'm feeling lucky
-            </button>
-          )}
         </div>
       )}
     </div>

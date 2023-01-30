@@ -4,4 +4,5 @@ Rails.application.routes.draw do
       post 'ask/create'
     end
   end
+  root 'homepage#index'
 end

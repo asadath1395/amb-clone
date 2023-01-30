@@ -57,3 +57,6 @@ build-iPhoneSimulator/
 
 # Ignore the environment file which can contain sensitive data
 .env
+
+/app/assets/builds
+/node_modules/

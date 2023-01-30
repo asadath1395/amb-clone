@@ -52,25 +52,37 @@ class Api::V1::AskController < ApplicationController
       }
     end
 
-    project_uuid = 'adb8d364'
-    voice_uuid = 't6551qa8'
+    project_uuid = ENV['RESEMBLE_PROJECT_UUID']
+    voice_uuid = ENV['RESEMBLE_VOICE_UUID']
 
-    response = Resemble::V2::Clip.create_sync(
-      project_uuid,
-      voice_uuid,
-      question_asked,
-      title: nil,
-      sample_rate: nil,
-      output_format: nil,
-      precision: nil,
-      include_timestamps: nil,
-      is_public: nil,
-      is_archived: nil,
-      raw: nil
-    )
+    if project_uuid and voice_uuid
+      response = Resemble::V2::Clip.create_sync(
+        project_uuid,
+        voice_uuid,
+        question_asked,
+        title: nil,
+        sample_rate: nil,
+        output_format: nil,
+        precision: nil,
+        include_timestamps: nil,
+        is_public: nil,
+        is_archived: nil,
+        raw: nil
+      )
+    end
 
-    df = Rover.read_csv('sample.pdf.pages.csv')
-    document_embeddings = load_embeddings('sample.pdf.embeddings.csv')
+    df = Rover::DataFrame.new()
+    page_location = ENV['PAGES_CSV_ABSOLUTE_PATH']
+    if page_location
+      df = Rover.read_csv(page_location)
+    end
+
+    document_embeddings = {}
+    page_embeddings_location = ENV['PAGES_EMBEDDINGS_CSV_ABSOLUTE_PATH']
+    if page_embeddings_location
+      document_embeddings = load_embeddings(page_embeddings_location)
+    end
+
     answer, context = answer_query_with_context(question_asked, df, document_embeddings)
 
     question = Question.create(question: question_asked, answer: answer, context: context, audio_src_url: "")

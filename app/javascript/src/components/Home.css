@@ -1,0 +1,61 @@
+html,
+body,
+#root {
+  height: 100%;
+}
+
+html {
+  font-size: clamp(1em, 0.909em + 0.45vmin, 1.25em);
+  font-family: system-ui;
+}
+
+body :not(:is(h1, h2, h3, h4, h5, h6)) {
+  line-height: 1.75;
+}
+
+.home-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 600px;
+  margin: auto;
+}
+
+.answer-container {
+  margin: 16px 0px;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+button,
+textarea {
+  box-sizing: border-box;
+  width: 100%;
+  border: 1px solid black;
+  border-radius: 10px;
+  font-size: 18px;
+  padding: 8px 12px;
+  margin-top: 1rem;
+  width: auto;
+}
+
+button {
+  cursor: pointer;
+}
+
+.ask-question {
+  color: white;
+  background: black;
+  padding: 8px 18px;
+}
+
+.feeling-lucky {
+  background: #eee;
+  border-color: #eee;
+  color: #444;
+}

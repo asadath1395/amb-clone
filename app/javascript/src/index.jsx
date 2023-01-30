@@ -2,13 +2,9 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
 
-document.addEventListener(
-  "DOMContentLoaded",
-  () => {
-    const root = createRoot(
-      document.body.appendChild(document.createElement("div"))
-    );
-    root.render(<App />);
-  },
-  { once: true }
-);
+const container = document.getElementById("root");
+const root = createRoot(container);
+
+document.addEventListener("DOMContentLoaded", () => {
+  root.render(<App />);
+});

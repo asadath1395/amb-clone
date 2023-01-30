@@ -5,8 +5,8 @@ import Home from "./components/Home";
 export default (
   <Router>
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/random" element={<Home />} />
+      <Route path="/" exact element={<Home />} />
+      <Route path="/question/:id" element={<Home />} />
     </Routes>
   </Router>
 );

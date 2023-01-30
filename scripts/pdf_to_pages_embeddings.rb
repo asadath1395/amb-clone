@@ -55,6 +55,7 @@ reader.pages.each_with_index do |page, index|
   df += extract_pages(page.text, index + 1)
 end
 df = df[df[:tokens] < 2046]
+File.open("#{filename}.pages.csv", 'w') { |file| file.write(df.to_csv) }
 
 def get_embedding(text, model)
   result = $client.embeddings(

@@ -1,5 +1,5 @@
 {
-  "name": "Ask My Book - Clone",
+  "name": "amb-clone",
   "private": "true",
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=assets --loader:.js=jsx"

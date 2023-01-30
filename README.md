@@ -14,7 +14,7 @@ This is a clone of the implementation of https://askmybook.com/ (https://github.
 
 ```
 bin/rails db:create
-rails db:migrate
+bin/rails db:migrate
 ```
 
 6. Run `bin/dev` which will spin up both Rails and React JS

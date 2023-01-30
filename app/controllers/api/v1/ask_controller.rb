@@ -84,6 +84,16 @@ class Api::V1::AskController < ApplicationController
     }
   end
 
+  def show
+    question = Question.find(params[:id])
+    render :json => {
+      "question": question.question,
+      "answer": question.answer,
+      "audio_src_url": question.audio_src_url,
+      "id": question.id
+    }
+  end
+
   private
   def client
     @client ||= OpenAI::Client.new(access_token: ENV['OPENAI_API_KEY']) 

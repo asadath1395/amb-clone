@@ -1,11 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
 import "./Home.css";
 
 const Home = () => {
+  const { id } = useParams();
   const [question, setQuestion] = useState("");
   const [showActionButtons, setShowActionButtons] = useState(true);
   const [answerToShow, setAnswerToShow] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (id) {
+      setLoading(true);
+      fetch(`/api/v1/questions/${id}`)
+        .then((data) => data.json())
+        .then((data) => {
+          if (data?.answer) {
+            setQuestion(data.question);
+            setAnswerToShow(data.answer);
+          }
+        })
+        .catch(() => {})
+        .finally(() => setLoading(false));
+    }
+  }, [id]);
 
   const typeWritingEffect = (originalAnswer, previousAnswer, start, end) => {
     // If we reached the length of original answer, just stop here instead of calling the function again
@@ -30,7 +49,7 @@ const Home = () => {
     formData.append("question", question);
 
     setLoading(true);
-    fetch("/api/v1/ask/create", {
+    fetch("/api/v1/ask", {
       method: "POST",
       body: formData,
     })
@@ -48,6 +67,7 @@ const Home = () => {
   return (
     <div className="home-container">
       <textarea
+        value={question}
         placeholder="Enter a question"
         onChange={(e) => setQuestion(e.target.value)}
       />
